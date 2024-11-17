@@ -2,17 +2,17 @@
 This project implements a serverless image upload and processing system on AWS. It enables users to upload images via an API endpoint, processes these images (resizes them), and stores metadata in a DynamoDB table. The processed images are saved back to the S3 bucket in a separate directory.
 
 Features
-  --- AWS S3: Stores uploaded and processed images.
-  --- AWS Lambda: Processes images (e.g., resizing) using a Lambda function triggered upon image upload.
-  --- AWS API Gateway: Provides an API endpoint to upload images to S3.
-  --- AWS DynamoDB: Stores metadata about each uploaded image, such as URL, size, and upload time.
+--- AWS S3: Stores uploaded and processed images.
+--- AWS Lambda: Processes images (e.g., resizing) using a Lambda function triggered upon image upload.
+--- AWS API Gateway: Provides an API endpoint to upload images to S3.
+--- AWS DynamoDB: Stores metadata about each uploaded image, such as URL, size, and upload time.
 
 Architecture
 The system operates in a serverless architecture using AWS Free Tier services:
-  --- API Gateway exposes an endpoint for uploading images.
-  --- S3 Bucket receives the images.
-  --- Lambda Function resizes and processes images when they are uploaded to S3.
-  --- DynamoDB stores metadata (URL, size, timestamp) for each image.
+--- API Gateway exposes an endpoint for uploading images.
+--- S3 Bucket receives the images.
+--- Lambda Function resizes and processes images when they are uploaded to S3.
+--- DynamoDB stores metadata (URL, size, timestamp) for each image.
 
 Setup Instructions
   1. Prerequisites
