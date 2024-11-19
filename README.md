@@ -1,4 +1,4 @@
-# **Serverless Image Upload and Processing System**
+# **Serverless Image Upload and Processing System on AWS**
 
 This project implements a serverless image upload and processing system on AWS. It enables users to upload images via an API endpoint, processes these images (resizes them), and stores metadata in a DynamoDB table. The processed images are saved back to the S3 bucket in a separate directory.
 
