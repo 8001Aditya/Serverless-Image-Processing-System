@@ -4,8 +4,8 @@ from PIL import Image
 import io
 
 s3 = boto3.client('s3')
-SOURCE_BUCKET = "my-image-processing-bucket"
-PROCESSED_BUCKET = "my-image-processing-bucket-processed"
+SOURCE_BUCKET = "my-image-processing-bucket-191124"
+PROCESSED_BUCKET = "my-image-processing-bucket-processed-191124"
 
 def lambda_handler(event, context):
     try:
