@@ -2,15 +2,23 @@ import boto3
 import os
 from PIL import Image
 import io
+from dotenv import load_dotenv
+from datetime import datetime
+
+load_dotenv()
 
 s3 = boto3.client('s3')
-SOURCE_BUCKET = "my-image-processing-bucket-191124"
-PROCESSED_BUCKET = "my-image-processing-bucket-processed-191124"
+dynamodb = boto3.resource('dynamodb')
+
+SOURCE_BUCKET = os.getenv('SOURCE_BUCKET')
+PROCESSED_BUCKET = os.getenv('PROCESSED_BUCKET')
+DYNAMODB_TABLE = os.getenv('DYNAMODB_TABLE')
 
 def lambda_handler(event, context):
     try:
-        bucket_name = event['Records'][0]['s3']['bucket']['name']
-        object_key = event['Records'][0]['s3']['object']['key']
+        record = event['Records'][0]
+        bucket_name = event['Records']['s3']['bucket']['name']
+        object_key = event['Records']['s3']['object']['key']
 
         print(f"Processing file: {object_key} from bucket: {bucket_name}")
 
@@ -30,15 +38,20 @@ def lambda_handler(event, context):
 
         print(f"Processed image saved to: {PROCESSED_BUCKET}/{processed_key}")
 
-        dynamodb = boto3.resource('dynamodb')
-        table = dynamodb.Table('ImageMetadata')
+        table = dynamodb.Table(DYNAMODB_TABLE)
         table.put_item(item={
             'ImageID' : object_key,
             'ProcessedURL' : f"s3://{PROCESSED_BUCKET}/{processed_key}",
-            'Size': f"{resized_image.size[0]}x{resized_image.size[1]}",
-            'Timestamp': response['LastModified'].strftime('%Y-%m-%d %H:%M:%S')
+            'Size': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         })
         
+        print(f"MetaData saved to DynamoDB table: {DYNAMODB_TABLE}")
+
+        return{
+            'status code' : 200,
+            'body' : f"Successfully processed file: {object_key}"
+        }
+
     except Exception as e:
         print(f"Error processing file: {e}")
         return {

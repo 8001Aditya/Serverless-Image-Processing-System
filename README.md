@@ -86,8 +86,8 @@ The system operates in a serverless architecture using AWS Free Tier services:
 
 ```plaintext
 |-- lambda_function.py          # Lambda function code
-|-- api_gateway_config.json     # API Gateway configuration
-|-- cloudformation_template.yaml # CloudFormation template to set up the architecture
+|-- api_gateway_config.json     # API Gateway configuration (optional)
+|-- cloudformation_template.yaml # CloudFormation template to set up the architecture (optional)
 
 ```
 ---
